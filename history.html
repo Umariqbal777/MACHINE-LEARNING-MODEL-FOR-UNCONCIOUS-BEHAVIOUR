@@ -1,0 +1,27 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8 fade-in">
+    <h1 class="text-4xl font-bold mb-6">{{ _('Prediction History') }}</h1>
+    
+    {% if history %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for p in history %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="{{ p.image_path }}" alt="Uploaded leaf" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <p class="text-sm text-gray-500">{{ p.timestamp.strftime('%B %d, %Y %I:%M %p') }} (IST)</p>
+                        <h3 class="text-xl font-bold mt-1">{{ p.prediction }}</h3>
+                        <p class="text-md text-gray-600 mt-1">{{ _('Confidence') }}: <span class="font-semibold">{{ p.confidence }}%</span></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-16">
+            <p class="text-xl text-gray-500">{{ _('No predictions have been saved yet.') }}</p>
+            <a href="{{ url_for('analyze_page') }}" class="mt-4 inline-block bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-all">{{ _('Make your first analysis!') }}</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
